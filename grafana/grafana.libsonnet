@@ -139,7 +139,7 @@ local configMapList = k.core.v1.configMapList;
       local c =
         container.new('grafana', $._config.imageRepos.grafana + ':' + $._config.versions.grafana) +
         (if std.length($._config.grafana.plugins) == 0 then {} else container.withEnv([env.new('GF_INSTALL_PLUGINS', std.join(',', $._config.grafana.plugins))])) +
-        container.withEnvMixin([env.new('GF_SERVER_HTTP_PORT', '' + $._config.grafana.port)]) +
+        container.withEnvMixin([env.new('GF_SERVER_HTTP_PORT', '' + $._config.grafana.containerPort.port)]) +
         container.withVolumeMounts(volumeMounts) +
         container.withPorts(containerPort.newNamed(portName, targetPort)) +
         container.mixin.readinessProbe.httpGet.withPath('/api/health') +
